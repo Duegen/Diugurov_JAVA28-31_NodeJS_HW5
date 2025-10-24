@@ -1,0 +1,19 @@
+{
+  "name": "ts-temlate-10_25",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "rimraf ./build && tsc && node ./build/src/app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "@types/node": "^24.9.0",
+    "rimraf": "^6.0.1",
+    "typescript": "^5.9.3"
+  }
+}

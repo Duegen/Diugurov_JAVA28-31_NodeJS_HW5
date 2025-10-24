@@ -1,0 +1,104 @@
+{
+	"info": {
+		"_postman_id": "119bdb62-d979-4775-a2e3-110dd7c58242",
+		"name": "UsersAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "49500476",
+		"_collection_link": "https://nikitadyugurov-9078756.postman.co/workspace/NodeJS~baf53c5a-4449-4e86-a734-fa98b3916627/collection/49500476-119bdb62-d979-4775-a2e3-110dd7c58242?action=share&source=collection_link&creator=49500476"
+	},
+	"item": [
+		{
+			"name": "GetAllUsers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3055/api/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3055",
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddUser",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\":1,\r\n    \"userName\":\"John\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3055/api/users?id=1&userName=\"John\"",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3055",
+					"path": [
+						"api",
+						"users"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1"
+						},
+						{
+							"key": "userName",
+							"value": "\"John\""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteUser",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3055/api/users?userId=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3055",
+					"path": [
+						"api",
+						"users"
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}
