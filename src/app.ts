@@ -138,14 +138,8 @@ myServer.listen(3055, () => {
     console.log("Server runs at http://localhost:3055")
 })
 
-myServer.on('listening', () => {
-    //Log directory cleaning
-    myLogger.clearLogDir().then(() => {
-        myLogger.createLogFile()
-        myLogger.saveToFile("session starts");
-        myLogger.saveToFile("server successfully started");
-    })
-
+myServer.on('listening', async () => {
+    myLogger.createLogFile()
 })
 
 myServer.on('close', () => {
@@ -158,4 +152,4 @@ myServer.on('close', () => {
 //     myServer.close(() => {
 //         console.log('Server closed!');
 //     });
-// }, 30000);
+// }, 60000);
