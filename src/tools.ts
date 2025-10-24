@@ -1,4 +1,5 @@
 import {IncomingMessage} from "node:http";
+import {myLogger} from "./events/logger.js";
 
 export const sayHi = (name:string):void => {
     console.log(`Hello ${name}`);
