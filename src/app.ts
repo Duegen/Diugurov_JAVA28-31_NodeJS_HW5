@@ -16,7 +16,8 @@ const myServer = createServer(async (req, res) => {
                 const users = getAllUsers();
                 res.writeHead(200, {"Content-Type": "application/json"});
                 res.end(JSON.stringify(users));
-                myLogger.saveToFile('all users responsed');
+                myLogger.logfileExist() ? myLogger.saveToFile('all users responsed')
+                                        : myLogger.save('all users responsed');
             } else {
                 const id = params.get('userId');
                 if (!id) {
@@ -31,7 +32,8 @@ const myServer = createServer(async (req, res) => {
                             res.writeHead(404, {"Content-Type": "text/plain"})
                             res.end(`user with id ${id} not found`)
                         } else {
-                            myLogger.saveToFile(`user with id ${id} is responsed`);
+                            myLogger.logfileExist() ? myLogger.saveToFile(`user with id ${id} is responsed`)
+                                                    : myLogger.save(`user with id ${id} is responsed`);
                             res.writeHead(200, {"Content-Type": "application/json"});
                             res.end(JSON.stringify(result));
                         }
@@ -51,7 +53,8 @@ const myServer = createServer(async (req, res) => {
             if (checkParams(params, method!)) {
                 const result = addUser(body as User);
                 if (result) {
-                    myLogger.saveToFile(`user with id ${body.id} is added`)
+                    myLogger.logfileExist() ? myLogger.saveToFile(`user with id ${body.id} is added`)
+                                            : myLogger.save(`user with id ${body.id} is added`)
                     res.writeHead(201, {"Content-Type": "text/plain"})
                     res.end("User successfully added")
                 } else {
@@ -80,7 +83,8 @@ const myServer = createServer(async (req, res) => {
                         res.writeHead(404, {"Content-Type": "text/plain"})
                         res.end(`User with id ${id} not found`)
                     } else {
-                        myLogger.saveToFile(`user with id ${id} is deleted`)
+                        myLogger.logfileExist() ? myLogger.saveToFile(`user with id ${id} is deleted`)
+                                                : myLogger.save(`user with id ${id} is deleted`);
                         res.writeHead(200, {"Content-Type": "application/json"});
                         res.end(JSON.stringify(result));
                     }
@@ -107,7 +111,8 @@ const myServer = createServer(async (req, res) => {
                         res.writeHead(404, {"Content-Type": "text/plain"})
                         res.end(`User with id ${id} not found`)
                     } else {
-                        myLogger.saveToFile(`user with id ${id} is updated`);
+                        myLogger.logfileExist() ? myLogger.saveToFile(`user with id ${id} is updated`)
+                                                : myLogger.save(`user with id ${id} is updated`);
                         res.writeHead(200, {"Content-Type": "application/json"});
                         res.end(JSON.stringify(result));
                     }
@@ -120,7 +125,8 @@ const myServer = createServer(async (req, res) => {
             break;
         }
         case '/logger' + 'GET': {
-            myLogger.log('log file is responsed');
+            myLogger.logfileExist() ? myLogger.saveToFile('log file is responsed')
+                                    : myLogger.save('log file is responsed');
             const allLogs = myLogger.getLogArray()
             res.writeHead(200, {"Content-Type": "application/json"});
             res.end(JSON.stringify(allLogs));
@@ -138,13 +144,28 @@ myServer.listen(3055, () => {
     console.log("Server runs at http://localhost:3055")
 })
 
-myServer.on('listening', async () => {
-    myLogger.createLogFile()
+myServer.on('listening', () => {
+    myLogger.createLogFile().then((message) => {
+        myLogger.saveToFile("session starts")
+        myLogger.saveToFile("server successfully started")
+        myLogger.saveToFile(message + "")
+    }).catch((message) => {
+        myLogger.save("session starts")
+        myLogger.save("server successfully started")
+        myLogger.save(message + "")
+    })
+
 })
 
 myServer.on('close', () => {
-    myLogger.saveToFile("server successfully closed");
-    myLogger.saveToFile("session finished");
+    if(myLogger.logfileExist()) {
+        myLogger.saveToFile("server successfully closed");
+        myLogger.saveToFile("session finished");
+    }
+    else{
+        myLogger.save("server successfully closed");
+        myLogger.save("session finished");
+    }
 })
 
 //Server close imitation
